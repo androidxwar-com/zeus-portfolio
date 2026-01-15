@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="ZEUS Heart Core - AI Engineering & Adaptive Software Architecture. Technical portfolio showcasing Clean Architecture, Fusion Engine, and Multi-Agent Systems.">
+  <title>ZEUS: Heart Core · Technical Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700;800;900&family=Fira+Code:wght@400;500&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- Particle Background Canvas -->
+  <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+  <!-- Atmospheric Background -->
+  <div id="rotating-background">
+    <img
+      src="C:/Users/Fedd/.gemini/antigravity/brain/7eb338f7-fa72-4bb6-a1b7-c00699fe924f/architecture_diagram_1768504267392.png"
+      alt="" class="bg-rotator">
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="nav-left">
+        <a href="#" class="logo">Neural<span class="logo-accent">Fusion</span></a>
+        <div class="nav-links">
+          <a href="#architecture">Architecture</a>
+          <a href="#ux">User Experience</a>
+          <a href="#nodes">Node Ecosystem</a>
+          <a href="#fusion">Fusion Engine</a>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a href="#docs" class="nav-link">Documentation</a>
+        <a href="#" class="btn btn-neon btn-small">View Project</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section - Fixed Background with Pure CSS Parallax -->
+    <section class="hero-fixed" id="heroSection">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-text">⚡ Technical Portfolio</span>
+          <a href="#architecture" class="badge-link">Explore Project</a>
+        </div>
+        <h1 class="hero-title">
+          ZEUS<br><span class="gradient-text">Heart Core</span>
+        </h1>
+        <p class="hero-subtitle-large">AI Engineering & Adaptive Software Architecture</p>
+        <a href="#architecture" class="btn btn-neon btn-large">View Architecture</a>
+        <div class="hero-meta">
+          <span class="meta-badge">Node.js</span>
+          <span class="meta-badge">Electron</span>
+          <span class="meta-badge">Custom Fusion Engine</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacer to push content down (creates natural parallax as content scrolls over Hero) -->
+    <div class="hero-spacer"></div>
+
+    <!-- Vision & Architecture Section -->
+    <section class="feature-section" id="architecture">
+      <div class="container">
+        <div class="feature-content fade-in-up">
+          <h2 class="section-title">🏛️ Vision & Architecture</h2>
+          <p class="section-description">
+            ZEUS is not just an application—it's a <strong>Cognitive Operating System</strong> built on <strong>Clean
+              Architecture</strong> and <strong>Domain-Driven Design</strong> principles.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <span class="feature-icon neon-purple">🎭</span>
+              <div>
+                <strong>Presentation Layer:</strong> Storm Core & Studio themes, fully decoupled from business logic
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon neon-green">🧠</span>
+              <div>
+                <strong>Domain Layer:</strong> Pure business rules and data models, technology-agnostic
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon neon-cyan">⚙️</span>
+              <div>
+                <strong>Infrastructure Layer:</strong> AI API drivers (Gemini, Groq, Cerebras), file system, networking
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-visual fade-in-up">
+          <div class="neon-card placeholder-card">
+            <div class="placeholder-content">
+              <span class="placeholder-icon">🛡️</span>
+              <h3>Soft Governance</h3>
+              <p>Manual checkpoints ensure intentional, verified code aligned with strategic vision</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- User Experience & Adaptive Layouts Section -->
+    <section class="feature-section alt" id="ux">
+      <div class="container">
+        <div class="feature-visual fade-in-up">
+          <div class="neon-card placeholder-card">
+            <div class="placeholder-content">
+              <span class="placeholder-icon">🎛️</span>
+              <h3>Storm Core</h3>
+              <p>Tactical dashboard for complex workflow management</p>
+            </div>
+          </div>
+        </div>
+        <div class="feature-content fade-in-up">
+          <h2 class="section-title">🎨 User Experience & Adaptive Layouts</h2>
+          <p class="section-description">
+            The interface is <strong>"liquid"</strong>, adapting to operational context through three distinct
+            environments.
+          </p>
+          <div class="synthesis-steps">
+            <div class="step-item">
+              <div class="step-number neon-purple">1</div>
+              <div class="step-content">
+                <h4>Storm Core: The Cockpit</h4>
+                <p>Tactical console for complex flows. High information density, instant execution</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number neon-green">2</div>
+              <div class="step-content">
+                <h4>Studio: Creative Environment</h4>
+                <p>Immersive workspace with Three.js backgrounds. Minimal UI for generative flow state</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number neon-cyan">3</div>
+              <div class="step-content">
+                <h4>Cronos: Smart Recents</h4>
+                <p>Predictive algorithm analyzes session context, identifying "living" workflows for instant resume</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Node Ecosystem & Workflow Automation Section -->
+    <section class="feature-section" id="nodes">
+      <div class="container">
+        <div class="feature-content fade-in-up">
+          <h2 class="section-title">🔗 Node Ecosystem & Workflow Automation</h2>
+          <p class="section-description">
+            Complex problems are decomposed into atomic executable units called <strong>Nodes</strong>.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <span class="feature-icon neon-purple">📊</span>
+              <div>
+                <strong>Decomposition:</strong> User tasks analyzed and subdivided into specialized sub-tasks
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon neon-green">🎯</span>
+              <div>
+                <strong>Routing:</strong> Each sub-task assigned to optimal AI model (Groq for speed, Claude/Gemini for
+                reasoning)
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon neon-cyan">⚡</span>
+              <div>
+                <strong>Execution:</strong> Nodes run in parallel/sequence, can interact with browser, read files, call
+                APIs
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-visual fade-in-up">
+          <div class="code-card neon-border-cyan">
+            <div class="code-header">
+              <span class="code-title">node_automation.js</span>
+              <span class="code-lang">SYSTEM</span>
+            </div>
+            <pre class="code-content"><code>// Browser Navigation
+await browser.navigate(url);
+const data = await browser.extract();
+
+// Parallel Node Execution
+const results = await Promise.all([
+  nodeA.execute(),
+  nodeB.execute(),
+  nodeC.execute()
+]);
+
+// Context Resume
+context.restore(sessionId);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fusion Synthesis Section -->
+    <section class="feature-section">
+      <div class="container">
+        <div class="feature-content fade-in-up">
+          <h2 class="section-title">The Master Synthesizer</h2>
+          <p class="section-description">
+            <strong>Gemini 2.5 Flash</strong> acts as the Fusion Engine, receiving all raw outputs and synthesizing them
+            into a single, optimized response.
+          </p>
+          <div class="synthesis-steps">
+            <div class="step-item">
+              <div class="step-number neon-purple">1</div>
+              <div class="step-content">
+                <h4>Cross-Verification</h4>
+                <p>Compares outputs from all cores to establish truth and identify inconsistencies</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number neon-green">2</div>
+              <div class="step-content">
+                <h4>Style Application</h4>
+                <p>Rewrites raw data in the voice of the selected Brain Node persona</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number neon-cyan">3</div>
+              <div class="step-content">
+                <h4>Optimization</h4>
+                <p>Removes redundancies and presents information once with maximum clarity</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-visual fade-in-up">
+          <div class="stats-card neon-border-purple">
+            <div class="stat-item">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-number gradient-text">4x</div>
+              <div class="stat-label">Parallel Cores</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">🎯</div>
+              <div class="stat-number gradient-text">1</div>
+              <div class="stat-label">Unified Output</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fusion Engine Section -->
+    <section class="feature-section alt" id="fusion">
+      <div class="container">
+        <div class="feature-content fade-in-up">
+          <h2 class="section-title">⚛️ AI Engineering: Fusion Engine</h2>
+          <p class="section-description">
+            Proprietary <strong>Map-Reduce orchestration engine</strong> that eliminates hallucinations through parallel
+            verification.
+          </p>
+          <div class="synthesis-steps">
+            <div class="step-item">
+              <div class="step-number neon-purple">1</div>
+              <div class="step-content">
+                <h4>Fan-Out (Parallelism)</h4>
+                <p>Query sent to multiple Neural Cores (Gemini, Llama, Mistral) with diverse system instructions</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number neon-green">2</div>
+              <div class="step-content">
+                <h4>Workers Density</h4>
+                <p>High-density system prompts maximize information quality, eliminate conversational filler</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number neon-cyan">3</div>
+              <div class="step-content">
+                <h4>Synthesis (Fan-In)</h4>
+                <p>Judge model cross-verifies outputs, discards hallucinations, produces Golden Answer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-visual fade-in-up">
+          <div class="stats-card neon-border-purple">
+            <div class="stat-item">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-number gradient-text">Multi</div>
+              <div class="stat-label">Neural Cores</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">🛡️</div>
+              <div class="stat-number gradient-text">Auto</div>
+              <div class="stat-label">Failover</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brain Nodes Gallery -->
+    <section class="gallery-section">
+      <h2 class="section-title centered fade-in-up">Persona Injection System</h2>
+      <p class="section-description centered fade-in-up">
+        Brain Nodes inject cognitive instructions that shape the synthesis style.<br>
+        Each persona brings a unique reasoning approach and communication style.
+      </p>
+
+      <div class="gallery-grid">
+        <div class="gallery-card neon-card fade-in-up">
+          <div class="card-image neon-border-purple">
+            <div class="persona-icon">🧠</div>
+            <div class="persona-overlay">
+              <h3>Creativity Node</h3>
+              <p>Imaginative, metaphorical reasoning</p>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-author">
+              <div class="author-avatar neon-purple">🎨</div>
+              <div class="author-details">
+                <div class="author-name">The Poet</div>
+                <div class="author-handle">Creative synthesis</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card neon-card fade-in-up">
+          <div class="card-image neon-border-green">
+            <div class="persona-icon">🔬</div>
+            <div class="persona-overlay">
+              <h3>Science Node</h3>
+              <p>Empirical, data-driven analysis</p>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-author">
+              <div class="author-avatar neon-green">🧪</div>
+              <div class="author-details">
+                <div class="author-name">The Scientist</div>
+                <div class="author-handle">Evidence-based reasoning</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card neon-card fade-in-up">
+          <div class="card-image neon-border-cyan">
+            <div class="persona-icon">⚙️</div>
+            <div class="persona-overlay">
+              <h3>Logic Node</h3>
+              <p>Structured, algorithmic thinking</p>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-author">
+              <div class="author-avatar neon-cyan">🤖</div>
+              <div class="author-details">
+                <div class="author-name">The Engineer</div>
+                <div class="author-handle">Systematic analysis</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-cta fade-in-up">
+        <a href="#personas" class="btn btn-neon-outline btn-large">Explore All Brain Nodes</a>
+      </div>
+    </section>
+
+    <!-- Multi-Agent System & Emotional Knowledge Section -->
+    <section class="gallery-section" id="agents">
+      <h2 class="section-title centered fade-in-up">🧠 Multi-Agent System & Emotional Knowledge</h2>
+      <p class="section-description centered fade-in-up">
+        Zeus maintains <strong>emotional memory</strong> and orchestrates specialized agents with distinct roles.
+      </p>
+
+      <div class="gallery-grid">
+        <div class="gallery-card neon-card fade-in-up">
+          <div class="card-image neon-border-purple">
+            <div class="persona-icon">🏗️</div>
+            <div class="persona-overlay">
+              <h3>The Architect</h3>
+              <p>Plans solution structure and system design</p>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-author">
+              <div class="author-avatar neon-purple">📐</div>
+              <div class="author-details">
+                <div class="author-name">Strategic Planning</div>
+                <div class="author-handle">High-level design</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card neon-card fade-in-up">
+          <div class="card-image neon-border-green">
+            <div class="persona-icon">💻</div>
+            <div class="persona-overlay">
+              <h3>The Coder</h3>
+              <p>Writes implementation and executable code</p>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-author">
+              <div class="author-avatar neon-green">⚡</div>
+              <div class="author-details">
+                <div class="author-name">Implementation</div>
+                <div class="author-handle">Code generation</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card neon-card fade-in-up">
+          <div class="card-image neon-border-cyan">
+            <div class="persona-icon">🔍</div>
+            <div class="persona-overlay">
+              <h3>The Reviewer</h3>
+              <p>Critiques and optimizes before user sees it</p>
+            </div>
+          </div>
+          <div class="card-info">
+            <div class="card-author">
+              <div class="author-avatar neon-cyan">✓</div>
+              <div class="author-details">
+                <div class="author-name">Quality Assurance</div>
+                <div class="author-handle">Code optimization</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-cta fade-in-up">
+        <p class="cta-description" style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+          <strong>Persona Injection:</strong> Dynamic instructions modify synthesis tone (formal, empatico, sintetico)
+          based on semantic analysis
+        </p>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+      <div class="cta-content fade-in-up">
+        <h2 class="cta-title">Built with <span class="gradient-text">AI-First</span> Methodology</h2>
+        <p class="cta-description">Demonstrating mastery in LLM integration, complex software architecture, and advanced
+          UI design</p>
+        <p class="cta-description" style="margin-top: 1rem; font-size: 0.875rem; opacity: 0.7;">
+          <em>Developed entirely with AI-assisted engineering</em>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4>Architecture</h4>
+        <a href="#">Map-Reduce Flow</a>
+        <a href="#">Neural Cores</a>
+        <a href="#">Synthesis Engine</a>
+        <a href="#">Technical Docs</a>
+      </div>
+      <div class="footer-column">
+        <h4>Features</h4>
+        <a href="#">Parallel Processing</a>
+        <a href="#">Brain Nodes</a>
+        <a href="#">Worker Prompts</a>
+        <a href="#">Cross-Verification</a>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">API Reference</a>
+        <a href="#">Examples</a>
+        <a href="#">GitHub</a>
+      </div>
+      <div class="footer-column">
+        <h4>Connect</h4>
+        <a href="#">Discord</a>
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Neural Fusion Engine. <code class="inline-code">Powered by Map-Reduce AI</code></p>
+    </div>
+  </footer>
+
+  <script src="particles.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
