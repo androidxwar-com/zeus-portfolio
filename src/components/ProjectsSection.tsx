@@ -1,4 +1,4 @@
-import { useState, useId } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
 interface Project {

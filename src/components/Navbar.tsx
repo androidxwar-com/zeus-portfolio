@@ -1,10 +1,10 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform, MotionValue } from 'framer-motion'
 
 interface DockItemProps {
     icon: string
     label: string
-    mouseX: ReturnType<typeof useMotionValue>
+    mouseX: MotionValue<number>
     onClick?: () => void
 }
 

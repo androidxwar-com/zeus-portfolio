@@ -1,0 +1,22 @@
+src/components/Navbar.tsx(29,35): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(input: MotionValue<number>, transformer: SingleTransformer<number, number>): MotionValue<number>', gave the following error.
+    Argument of type 'MotionValue<unknown>' is not assignable to parameter of type 'MotionValue<number>'.
+      Types of property 'onChange' are incompatible.
+        Type '(subscription: Subscriber<unknown>) => () => void' is not assignable to type '(subscription: Subscriber<number>) => () => void'.
+          Types of parameters 'subscription' and 'subscription' are incompatible.
+            Types of parameters 'v' and 'v' are incompatible.
+              Type 'unknown' is not assignable to type 'number'.
+  Overload 2 of 4, '(input: MotionValue<string>[] | MotionValue<number>[] | MotionValue<string | number>[], transformer: MultiTransformer<unknown, number>): MotionValue<...>', gave the following error.
+    Argument of type 'MotionValue<unknown>' is not assignable to parameter of type 'MotionValue<string>[] | MotionValue<number>[] | MotionValue<string | number>[]'.
+src/components/Navbar.tsx(34,32): error TS2345: Argument of type 'MotionValue<unknown>' is not assignable to parameter of type 'MotionValue<number>'.
+  Types of property 'onChange' are incompatible.
+    Type '(subscription: Subscriber<unknown>) => () => void' is not assignable to type '(subscription: Subscriber<number>) => () => void'.
+      Types of parameters 'subscription' and 'subscription' are incompatible.
+        Types of parameters 'v' and 'v' are incompatible.
+          Type 'unknown' is not assignable to type 'number'.
+src/components/Navbar.tsx(112,25): error TS2322: Type 'MotionValue<number>' is not assignable to type 'MotionValue<unknown>'.
+  Types of property 'updateAndNotify' are incompatible.
+    Type '(v: number, render?: boolean | undefined) => void' is not assignable to type '(v: unknown, render?: boolean | undefined) => void'.
+      Types of parameters 'v' and 'v' are incompatible.
+        Type 'unknown' is not assignable to type 'number'.
+src/components/ProjectsSection.tsx(1,20): error TS6133: 'useId' is declared but its value is never read.
