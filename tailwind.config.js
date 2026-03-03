@@ -11,7 +11,11 @@ export default {
                 foreground: "hsl(var(--foreground))",
             },
             fontFamily: {
-                sans: ["Inter", "sans-serif"],
+                sans: ['Inter', 'system-ui', 'sans-serif'],
+                display: ['Syne', 'Inter', 'sans-serif'],
+            },
+            fontWeight: {
+                800: '800',
             },
         },
     },

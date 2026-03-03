@@ -1,88 +1,102 @@
-import { motion } from "framer-motion"
-import { Wand2, Layers, Zap, Share2, Type, PenTool } from "lucide-react"
+import { motion } from 'framer-motion'
 
-const features = [
-    {
-        icon: Wand2,
-        title: "Animate in seconds",
-        desc: "Presets for everything. Fade, Slide, Scale, and more.",
-        color: "bg-purple-500/10 text-purple-400",
-        size: "col-span-1 md:col-span-2",
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.15, delayChildren: 0.3 },
     },
-    {
-        icon: Layers,
-        title: "Figma Integration",
-        desc: "Import your designs in one click and start animating.",
-        color: "bg-blue-500/10 text-blue-400",
-        size: "col-span-1",
-    },
-    {
-        icon: Zap,
-        title: "4K Export",
-        desc: "Export as MP4, GIF, or Lottie. Crystal clear quality.",
-        color: "bg-green-500/10 text-green-400",
-        size: "col-span-1",
-    },
-    {
-        icon: Share2,
-        title: "Collaboration",
-        desc: "Work together with your team in real-time.",
-        color: "bg-orange-500/10 text-orange-400",
-        size: "col-span-1 md:col-span-2",
-    },
-    {
-        icon: Type,
-        title: "Text Effects",
-        desc: "Typewriter, Wiggle, Glitch. Make words pop.",
-        color: "bg-pink-500/10 text-pink-400",
-        size: "col-span-1",
-    },
-    {
-        icon: PenTool,
-        title: "Vector Tools",
-        desc: "Draw and edit paths directly in the browser.",
-        color: "bg-yellow-500/10 text-yellow-400",
-        size: "col-span-1",
-    }
-]
+}
 
-export function Features() {
+const item = {
+    hidden: { opacity: 0, y: 40 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+}
+
+export function ZeusSection() {
     return (
-        <section className="py-24 px-6 bg-neutral-950">
-            <div className="container max-w-6xl mx-auto">
+        <section id="zeus" className="relative py-32 md:py-40 px-6">
+            {/* Background gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-violet-950/10 to-black pointer-events-none" />
 
-                <div className="text-center mb-16">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-bold mb-4"
+            <motion.div
+                className="relative max-w-6xl mx-auto"
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: '-100px' }}
+            >
+                {/* Section header */}
+                <motion.div variants={item} className="mb-20 text-center">
+                    <p className="text-xs tracking-[0.4em] uppercase text-violet-400/70 mb-4">Featured Project</p>
+                    <h2
+                        className="text-5xl md:text-7xl lg:text-8xl font-extrabold uppercase tracking-tight"
+                        style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Everything you need to <br />
-                        <span className="text-neutral-400">create stunning motion.</span>
-                    </motion.h2>
-                </div>
+                        Zeus <span className="bg-gradient-to-r from-violet-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">Heart Core</span>
+                    </h2>
+                    <p className="mt-6 text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+                        A <strong className="text-neutral-200">Cognitive Operating System</strong> built on Clean Architecture — not just an app, but an AI-first desktop environment.
+                    </p>
+                </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    {features.map((feature, i) => (
-                        <motion.div
-                            key={i}
-                            className={`p-8 rounded-3xl border border-white/5 bg-neutral-900/50 backdrop-blur-sm hover:bg-neutral-900 transition-colors group ${feature.size}`}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
+                {/* Architecture Cards Grid */}
+                <motion.div variants={item} className="grid md:grid-cols-3 gap-4 md:gap-6 mb-16">
+                    <ArchCard
+                        icon="🎭"
+                        title="Presentation Layer"
+                        desc="Storm Core & Studio themes — fully decoupled from business logic. Liquid UI adapts to context."
+                        color="violet"
+                    />
+                    <ArchCard
+                        icon="🧠"
+                        title="Domain Layer"
+                        desc="Pure business rules and data models. Technology-agnostic core logic for maximum portability."
+                        color="cyan"
+                    />
+                    <ArchCard
+                        icon="⚙️"
+                        title="Infrastructure Layer"
+                        desc="AI API drivers (Gemini, Groq, Claude), file system, IPC channels, sandboxed security."
+                        color="emerald"
+                    />
+                </motion.div>
+
+                {/* Feature pills */}
+                <motion.div variants={item} className="flex flex-wrap justify-center gap-3">
+                    {['Electron', 'Node.js', 'Multi-AI Fusion', 'Three.js', 'Clean Architecture', 'Multi-Agent System', 'Workflow Nodes'].map((tag) => (
+                        <span
+                            key={tag}
+                            className="px-4 py-2 rounded-full text-xs tracking-wider uppercase glass border border-white/5 text-neutral-300 hover:text-white hover:border-violet-500/30 transition-all duration-300"
                         >
-                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 ${feature.color} group-hover:scale-110 transition-transform duration-300`}>
-                                <feature.icon size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
-                            <p className="text-neutral-400 leading-relaxed">{feature.desc}</p>
-                        </motion.div>
+                            {tag}
+                        </span>
                     ))}
-                </div>
-
-            </div>
+                </motion.div>
+            </motion.div>
         </section>
+    )
+}
+
+function ArchCard({ icon, title, desc, color }: { icon: string; title: string; desc: string; color: string }) {
+    const borderMap: Record<string, string> = {
+        violet: 'hover:border-violet-500/30 hover:shadow-violet-500/5',
+        cyan: 'hover:border-cyan-500/30 hover:shadow-cyan-500/5',
+        emerald: 'hover:border-emerald-500/30 hover:shadow-emerald-500/5',
+    }
+
+    return (
+        <motion.div
+            className={`glass rounded-2xl p-6 md:p-8 border border-white/5 transition-all duration-500 hover:shadow-2xl ${borderMap[color]}`}
+            whileHover={{ y: -4 }}
+        >
+            <span className="text-3xl mb-4 block">{icon}</span>
+            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+            <p className="text-sm text-neutral-400 leading-relaxed">{desc}</p>
+        </motion.div>
     )
 }

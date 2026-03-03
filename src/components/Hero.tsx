@@ -1,119 +1,152 @@
-import { Button } from "./ui/Button"
-import { motion } from "framer-motion"
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
-// Floating animation variants
-const floatingVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: {
-            delay: 0.5 + i * 0.1,
-            duration: 0.8,
-            ease: [0.215, 0.61, 0.355, 1],
-        },
-    }),
-    float: (i: number) => ({
-        y: [0, -10, 0],
-        rotate: [0, i % 2 === 0 ? 1 : -1, 0],
-        transition: {
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.5,
-        },
-    }),
-}
+export function HeroSection() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start'],
+  })
 
-export function Hero() {
-    return (
-        <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20">
-            {/* Background Gradients */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" />
+  // Image crossfade: hero-1 fades out, hero-2 fades in
+  const img1Opacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0])
+  const img2Opacity = useTransform(scrollYProgress, [0.2, 0.5, 0.7], [0, 1, 1])
 
-            <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center">
+  // Subtle upward parallax on the portrait
+  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%'])
 
-                {/* Badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-neutral-300 backdrop-blur-sm"
-                >
-                    <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
-                    Jitter for Figma is here
-                </motion.div>
+  // Text parallax: rises faster than image
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-50%'])
 
-                {/* Main Heading */}
-                <motion.h1
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                    className="max-w-4xl text-5xl md:text-7xl font-bold tracking-tight text-white mb-6"
-                >
-                    Motion design <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                        made simple.
-                    </span>
-                </motion.h1>
+  // Text fades early
+  const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.45], [1, 0.9, 0])
 
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="max-w-xl text-lg text-neutral-400 mb-8"
-                >
-                    Create professional animations in minutes. Use it for videos, apps, or social media. Runs in your browser.
-                </motion.p>
+  // Black overlay deepens on scroll for smooth transition to next section
+  const overlayOpacity = useTransform(scrollYProgress, [0.4, 0.75], [0, 1])
 
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                    className="flex flex-col sm:flex-row items-center gap-4"
-                >
-                    <Button variant="primary" size="lg" className="text-lg h-14 px-8">
-                        Try Jitter for free
-                    </Button>
-                    <Button variant="outline" size="lg" className="text-lg h-14 px-8">
-                        Watch video
-                    </Button>
-                </motion.div>
+  return (
+    <section ref={containerRef} className="relative h-[280vh]">
+      {/* Sticky full-screen frame — bg matches sampled photo black (#0a0806) */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden" style={{ backgroundColor: '#0a0806' }}>
 
-                {/* Mock Interface / Floating Elements */}
-                <div className="mt-20 relative w-full max-w-5xl aspect-video rounded-xl border border-white/10 bg-neutral-900/50 backdrop-blur-sm shadow-2xl overflow-hidden group">
-                    {/* Fake UI Header */}
-                    <div className="h-10 border-b border-white/5 bg-white/5 flex items-center px-4 gap-2">
-                        <div className="flex gap-1.5">
-                            <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                            <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                        </div>
-                    </div>
+        {/* ── Portrait container: 3/4 viewport width, perfectly centered ── */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ y: imageY }}
+        >
+          {/*
+            Image wrapper: portrait ratio, max 72vw wide, 100% screen height.
+            object-contain keeps the full portrait visible without any crop.
+            The natural black background of the photo merges with the page bg.
+          */}
+          <div
+            className="relative h-full"
+            style={{ width: 'min(66vw, 900px)', maxHeight: '100vh' }}
+          >
+            {/* Hero Image 1 */}
+            <motion.img
+              src="/images/hero-1.jpg"
+              alt="Fahd Taraoui — AI Engineer"
+              className="absolute inset-0 w-full h-full object-contain object-center"
+              style={{
+                opacity: img1Opacity,
+                imageRendering: 'auto',
+                WebkitFontSmoothing: 'antialiased',
+              }}
+              draggable={false}
+            />
 
-                    {/* Canvas Area */}
-                    <div className="relative w-full h-full flex items-center justify-center p-12">
-                        {/* Simulated Jitter Elements floating */}
-                        {[...Array(3)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                custom={i}
-                                variants={floatingVariant}
-                                initial="hidden"
-                                animate={["visible", "float"]}
-                                className={`absolute w-32 h-32 rounded-2xl border border-white/20 backdrop-blur-md flex items-center justify-center shadow-xl
-                            ${i === 0 ? 'bg-purple-500/30 left-[20%] top-[30%]' : ''}
-                            ${i === 1 ? 'bg-blue-500/30 right-[25%] top-[20%]' : ''}
-                            ${i === 2 ? 'bg-pink-500/30 left-[40%] bottom-[20%]' : ''}
-                        `}
-                            >
-                                <div className="w-16 h-16 rounded-full bg-white/20" />
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
+            {/* Hero Image 2 */}
+            <motion.img
+              src="/images/hero-2.jpg"
+              alt="Fahd Taraoui — AI Engineer"
+              className="absolute inset-0 w-full h-full object-contain object-center"
+              style={{
+                opacity: img2Opacity,
+                imageRendering: 'auto',
+              }}
+              draggable={false}
+            />
 
-            </div>
-        </div>
-    )
+            {/* Soft vignette: only bottom fade to merge with page */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'linear-gradient(to bottom, transparent 55%, rgba(10,8,6,0.7) 80%, #0a0806 100%)',
+              }}
+            />
+          </div>
+        </motion.div>
+
+        {/* Ambient top vignette — uses photo-sampled black */}
+        <div
+          className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, rgba(10,8,6,0.7), transparent)' }}
+        />
+
+        {/* ── Hero Typography (floating above, mix-blend) ── */}
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-end pb-20 md:pb-28 pointer-events-none z-10"
+          style={{ y: textY, opacity: textOpacity }}
+        >
+          {/* Small label */}
+          <motion.p
+            className="mix-blend-text text-[10px] md:text-xs tracking-[0.35em] uppercase mb-3 text-white/60 font-light"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 0.6, y: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          >
+            AI Engineer & Software Architect
+          </motion.p>
+
+          {/* Main name */}
+          <motion.h1
+            className="mix-blend-text text-[13vw] md:text-[10vw] lg:text-[9vw] font-extrabold leading-[0.88] tracking-tighter text-center uppercase text-white"
+            style={{ fontFamily: 'var(--font-display)' }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            Taraoui<br />Fahd
+          </motion.h1>
+
+          {/* Divider + subtitle */}
+          <motion.div
+            className="mix-blend-text flex items-center gap-4 mt-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.45 }}
+            transition={{ duration: 1, delay: 0.9 }}
+          >
+            <span className="w-10 h-px bg-white/40" />
+            <p className="text-[10px] tracking-[0.22em] uppercase font-light text-white">
+              Creator of Zeus Heart Core
+            </p>
+            <span className="w-10 h-px bg-white/40" />
+          </motion.div>
+        </motion.div>
+
+        {/* Black fade-out overlay on scroll — photo-matched tone */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-20"
+          style={{ backgroundColor: '#0a0806', opacity: overlayOpacity }}
+        />
+
+        {/* Scroll prompt */}
+        <motion.div
+          className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.35 }}
+          transition={{ duration: 1, delay: 1.8 }}
+          style={{ opacity: useTransform(scrollYProgress, [0, 0.12], [0.35, 0]) }}
+        >
+          <span className="text-[9px] tracking-[0.35em] uppercase text-white">Scroll</span>
+          <motion.div
+            className="w-px h-7 bg-white/25"
+            animate={{ scaleY: [1, 0.4, 1] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </motion.div>
+      </div>
+    </section>
+  )
 }
