@@ -1,0 +1,4 @@
+src/components/Hero.tsx(26,9): error TS6133: 'overlayOpacity' is declared but its value is never read.
+src/main.tsx(7,37): error TS6133: 'source' is declared but its value is never read.
+src/main.tsx(7,45): error TS6133: 'lineno' is declared but its value is never read.
+src/main.tsx(7,53): error TS6133: 'colno' is declared but its value is never read.

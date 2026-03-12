@@ -22,8 +22,7 @@ export function HeroSection() {
   // Text fades early
   const textOpacity = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 0.9, 0])
 
-  // Black overlay deepens on scroll
-  const overlayOpacity = useTransform(scrollYProgress, [0.8, 1], [0, 1])
+  // Black overlay deepens on scroll (removed overlayOpacity, using Liquid Dissolve instead)
 
   // Liquid Dissolve: gradiente che si rivela per ammorbidire la transizione alla prossima sezione
   const dissolveIntensity = useTransform(scrollYProgress, [0.6, 0.85], [0, 1])

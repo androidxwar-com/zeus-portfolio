@@ -9,7 +9,6 @@ import { SkillsSection } from './components/SkillsSection'
 import { ProjectsSection } from './components/ProjectsSection'
 import { UpcomingSection } from './components/UpcomingSection'
 import { BlogSection } from './components/BlogSection'
-import { AnimatedBackground } from './components/AnimatedBackground'
 import { ContactSection, Footer } from './components/ContactSection'
 import { HeroSection } from './components/Hero'
 import { WebGLBackground } from './components/WebGLBackground'
@@ -57,8 +56,6 @@ function App() {
                 {/* Animated background — Canvas2D particle sea (kinetic, velocity-reactive) */}
                 <WebGLBackground />
                 
-                {/* Fallback CSS Animated background (legacy) — removed or kept behind WebGL */}
-            <AnimatedBackground />
             {/* Dock Navigation (fixed bottom) */}
             <Dock />
 
