@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { GoldenArches } from './GoldenArches'
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -8,9 +9,9 @@ export function HeroSection() {
     offset: ['start start', 'end start'],
   })
 
-  // Image crossfade: hero-1 fades out, hero-2 fades in
-  const img1Opacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0])
-  const img2Opacity = useTransform(scrollYProgress, [0.2, 0.5, 0.7], [0, 1, 1])
+  // Image crossfade
+  const img1Opacity = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 1, 0])
+  const img2Opacity = useTransform(scrollYProgress, [0.4, 0.8, 1], [0, 1, 1])
 
   // Subtle upward parallax on the portrait
   const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%'])
@@ -19,26 +20,66 @@ export function HeroSection() {
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-50%'])
 
   // Text fades early
-  const textOpacity = useTransform(scrollYProgress, [0, 0.2, 0.45], [1, 0.9, 0])
+  const textOpacity = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 0.9, 0])
 
-  // Black overlay deepens on scroll for smooth transition to next section
-  const overlayOpacity = useTransform(scrollYProgress, [0.4, 0.75], [0, 1])
+  // Black overlay deepens on scroll
+  const overlayOpacity = useTransform(scrollYProgress, [0.8, 1], [0, 1])
+
+  // Liquid Dissolve: gradiente che si rivela per ammorbidire la transizione alla prossima sezione
+  const dissolveIntensity = useTransform(scrollYProgress, [0.6, 0.85], [0, 1])
+
+  const blindOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1])
+  const blindY = useTransform(scrollYProgress, [0, 1], ['0%', '15%'])
+  const blinds = Array.from({ length: 6 })
 
   return (
-    <section ref={containerRef} className="relative h-[280vh]">
-      {/* Sticky full-screen frame — bg matches sampled photo black (#0a0806) */}
+    <section ref={containerRef} className="relative h-[130vh]">
+      {/* Sticky full-screen frame */}
       <div className="sticky top-0 h-screen w-full overflow-hidden" style={{ backgroundColor: '#0a0806' }}>
 
-        {/* ── Portrait container: 3/4 viewport width, perfectly centered ── */}
+
+        {/* ── Background Venetian Blinds (Animated) ── */}
+        <div className="absolute inset-0 flex">
+          {blinds.map((_, i) => {
+            const delay = i * 0.1
+            return (
+              <motion.div
+                key={i}
+                className="flex-1 h-full border-r border-[#1a1208]/30 relative"
+                initial={{ backgroundColor: '#0a0806' }}
+                animate={{
+                  backgroundColor: ['#0a0806', '#140e06', '#0a0806'],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: 'linear',
+                  delay,
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2a1a08]/10 to-transparent" />
+                <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-[#ffcc66]/5 to-transparent" />
+              </motion.div>
+            )
+          })}
+        </div>
+        <motion.div
+          className="absolute inset-0 pointer-events-none mix-blend-color-dodge"
+          style={{
+            background: 'radial-gradient(circle at 50% 50%, rgba(200, 140, 60, 0.08) 0%, transparent 60%)',
+            opacity: blindOpacity,
+            y: blindY,
+          }}
+        />
+
+        {/* ── GOLDEN ARCHES: sopra le Venetian Blinds, sotto il ritratto e il testo ── */}
+        <GoldenArches />
+
+        {/* ── Portrait container ── */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
           style={{ y: imageY }}
         >
-          {/*
-            Image wrapper: portrait ratio, max 72vw wide, 100% screen height.
-            object-contain keeps the full portrait visible without any crop.
-            The natural black background of the photo merges with the page bg.
-          */}
           <div
             className="relative h-full"
             style={{ width: 'min(66vw, 900px)', maxHeight: '100vh' }}
@@ -51,7 +92,6 @@ export function HeroSection() {
               style={{
                 opacity: img1Opacity,
                 imageRendering: 'auto',
-                WebkitFontSmoothing: 'antialiased',
               }}
               draggable={false}
             />
@@ -68,7 +108,7 @@ export function HeroSection() {
               draggable={false}
             />
 
-            {/* Soft vignette: only bottom fade to merge with page */}
+            {/* Soft vignette: only bottom fade */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -78,13 +118,13 @@ export function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Ambient top vignette — uses photo-sampled black */}
+        {/* Ambient top vignette */}
         <div
           className="absolute inset-x-0 top-0 h-32 pointer-events-none"
           style={{ background: 'linear-gradient(to bottom, rgba(10,8,6,0.7), transparent)' }}
         />
 
-        {/* ── Hero Typography (floating above, mix-blend) ── */}
+        {/* ── Hero Typography ── */}
         <motion.div
           className="absolute inset-0 flex flex-col items-center justify-end pb-20 md:pb-28 pointer-events-none z-10"
           style={{ y: textY, opacity: textOpacity }}
@@ -92,30 +132,41 @@ export function HeroSection() {
           {/* Small label */}
           <motion.p
             className="mix-blend-text text-[10px] md:text-xs tracking-[0.35em] uppercase mb-3 text-white/60 font-light"
-            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 0.6, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            transition={{ duration: 2.5, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+            style={{ opacity: 0, y: 40, willChange: 'transform, opacity' }}
           >
             AI Engineer & Software Architect
           </motion.p>
 
           {/* Main name */}
-          <motion.h1
-            className="mix-blend-text text-[13vw] md:text-[10vw] lg:text-[9vw] font-extrabold leading-[0.88] tracking-tighter text-center uppercase text-white"
-            style={{ fontFamily: 'var(--font-display)' }}
-            initial={{ opacity: 0, y: 50 }}
+          <motion.div
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              duration: 2.5,
+              delay: 0.1,
+              ease: [0.42, 0, 0.58, 1],
+            }}
+            style={{
+              opacity: 0,
+              y: 80,
+              willChange: 'transform, opacity',
+            }}
           >
-            Taraoui<br />Fahd
-          </motion.h1>
+            <h1
+              className="mix-blend-text text-[11vw] md:text-[8.5vw] lg:text-[7.5vw] font-extrabold leading-[0.88] tracking-tighter text-center uppercase text-white"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Taraoui<br />Fahd
+            </h1>
+          </motion.div>
 
           {/* Divider + subtitle */}
           <motion.div
             className="mix-blend-text flex items-center gap-4 mt-5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.45 }}
-            transition={{ duration: 1, delay: 0.9 }}
+            animate={{ opacity: 0.45, y: 0 }}
+            transition={{ duration: 2.5, delay: 0.2, ease: [0.42, 0, 0.58, 1] }}
+            style={{ opacity: 0, y: 40, willChange: 'transform, opacity' }}
           >
             <span className="w-10 h-px bg-white/40" />
             <p className="text-[10px] tracking-[0.22em] uppercase font-light text-white">
@@ -125,10 +176,23 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Black fade-out overlay on scroll — photo-matched tone */}
+        {/* ── LIQUID DISSOLVE: Bottom gradient - sempre visibile, si intensifica su scroll ── */}
+        {/* Vive DENTRO lo sticky frame, quindi always on screen durante lo scroll della Hero */}
         <motion.div
-          className="absolute inset-0 pointer-events-none z-20"
-          style={{ backgroundColor: '#0a0806', opacity: overlayOpacity }}
+          className="absolute inset-x-0 bottom-0 pointer-events-none z-20"
+          style={{
+            height: '50vh',
+            opacity: dissolveIntensity,
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(10,8,6,0.3) 30%, rgba(10,8,6,0.7) 60%, rgba(10,8,6,0.95) 85%, #0a0806 100%)',
+          }}
+        />
+        {/* Sub-gradient permanente che ammorbidisce sempre il bordo inferiore */}
+        <div
+          className="absolute inset-x-0 bottom-0 pointer-events-none z-19"
+          style={{
+            height: '15vh',
+            background: 'linear-gradient(to bottom, transparent, #0a0806)',
+          }}
         />
 
         {/* Scroll prompt */}
@@ -137,7 +201,6 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.35 }}
           transition={{ duration: 1, delay: 1.8 }}
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.12], [0.35, 0]) }}
         >
           <span className="text-[9px] tracking-[0.35em] uppercase text-white">Scroll</span>
           <motion.div

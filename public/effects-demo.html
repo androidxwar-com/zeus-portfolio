@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Utopia Max — Effect 03: Golden Arches</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0806; color: #fff; font-family: 'Inter', sans-serif; cursor: none; }
+
+  .scene {
+    position: relative; width: 100%; height: 100vh;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+
+  .portrait {
+    position: relative; z-index: 20;
+    width: min(38vw, 300px); height: 72vh;
+    background: linear-gradient(170deg, #1c1208 0%, #0d0a04 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.6rem;
+  }
+  .portrait h2 {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,5vw,2.8rem);
+    font-weight: 800; text-transform: uppercase;
+    color: rgba(255,255,255,0.15); text-align: center;
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  .portrait p { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+
+  .canvas-left, .canvas-right {
+    position: absolute; top: 0; bottom: 0; height: 100%;
+    pointer-events: none; z-index: 10;
+  }
+  .canvas-left { left: 0; }
+  .canvas-right { right: 0; }
+
+  /* Full-screen canvas for crossover at feet */
+  #crossCanvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 15;
+  }
+
+  .tag {
+    position: absolute; top: 2.2rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(255,255,255,0.28); display: flex; align-items: center; gap: 1rem; z-index: 30;
+  }
+  .tag::before, .tag::after { content:''; width:2.5rem; height:1px; background:rgba(255,255,255,0.12); }
+  .title {
+    position: absolute; top: 4.8rem; left: 50%; transform: translateX(-50%);
+    font-family: 'Syne', sans-serif; font-size: clamp(1.4rem,3.5vw,2rem);
+    font-weight: 700; z-index: 30; white-space: nowrap;
+  }
+  .badge {
+    position: absolute; top: 2.2rem; right: 2rem; z-index: 30;
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.28rem 0.65rem; border-radius: 999px;
+    border: 1px solid #ffcc66; color: #ffcc66; opacity: 0.7;
+  }
+  .desc {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.72rem; color: rgba(255,255,255,0.38); text-align: center;
+    max-width: 40rem; line-height: 1.9; z-index: 30; white-space: nowrap;
+  }
+
+  /* Custom cursor */
+  #cursor {
+    position: fixed; z-index: 9999; pointer-events: none;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: rgba(255,204,102,0.85);
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    box-shadow: 0 0 12px 4px rgba(255,204,102,0.3);
+  }
+  #cursorRing {
+    position: fixed; z-index: 9998; pointer-events: none;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(255,204,102,0.35);
+    transform: translate(-50%, -50%);
+    transition: width 0.35s cubic-bezier(0.23,1,0.32,1),
+                height 0.35s cubic-bezier(0.23,1,0.32,1),
+                opacity 0.3s;
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<section class="scene" id="s3">
+  <div class="tag">Effect 03</div>
+  <div class="title">Golden Arches</div>
+  <div class="badge">Premium · Estetico</div>
+
+  <canvas class="canvas-left"  id="c3L"></canvas>
+  <canvas class="canvas-right" id="c3R"></canvas>
+  <canvas id="crossCanvas"></canvas>
+
+  <div class="portrait"><h2>Taraoui<br/>Fahd</h2><p>AI Engineer</p></div>
+  <div class="desc">7 archi dorati · crossover ai piedi · attrazione cursore stile buco nero</div>
+</section>
+
+<script>
+// ── CURSOR TRACKING ───────────────────────────────────
+const cur = document.getElementById('cursor')
+const ring = document.getElementById('cursorRing')
+let mouseX = -999, mouseY = -999
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY
+  cur.style.left  = mouseX + 'px'
+  cur.style.top   = mouseY + 'px'
+  ring.style.left = mouseX + 'px'
+  ring.style.top  = mouseY + 'px'
+})
+
+// ── SETUP ─────────────────────────────────────────────
+window.addEventListener('load', () => {
+  function setupSide(id) {
+    const canvas = document.getElementById(id)
+    canvas.width  = Math.round(canvas.parentElement.offsetWidth / 2 - 10)
+    canvas.height = canvas.parentElement.offsetHeight
+    return { canvas, ctx: canvas.getContext('2d') }
+  }
+
+  const L = setupSide('c3L')
+  const R = setupSide('c3R')
+  const W = L.canvas.width
+  const H = L.canvas.height
+
+  // Full canvas for crossover
+  const cross = document.getElementById('crossCanvas')
+  cross.width  = window.innerWidth
+  cross.height = window.innerHeight
+  const crossCtx = cross.getContext('2d')
+
+  // Portrait metrics (approximated)
+  const pW = Math.min(window.innerWidth * 0.38, 300)
+  const pH = window.innerHeight * 0.72
+  const pX = window.innerWidth  / 2  // center x
+  const pY = window.innerHeight / 2  // center y
+  const feetY = pY + pH / 2         // bottom edge of portrait
+
+  // ── 7 ARC DEFINITIONS ────────────────────────────────
+  // Distributed vertically across the canvas height
+  const arcDefs = [
+    { y: H * 0.10, amp: 10, period: 190, alpha: 0.30, thick: 0.6 },
+    { y: H * 0.22, amp: 18, period: 220, alpha: 0.55, thick: 1.0 },
+    { y: H * 0.34, amp: 12, period: 170, alpha: 0.42, thick: 0.8 },
+    { y: H * 0.47, amp: 22, period: 300, alpha: 0.65, thick: 1.3 }, // center - strongest
+    { y: H * 0.60, amp: 15, period: 250, alpha: 0.48, thick: 0.9 },
+    { y: H * 0.73, amp: 10, period: 140, alpha: 0.38, thick: 0.7 },
+    { y: H * 0.84, amp: 14, period: 210, alpha: 0.40, thick: 0.8 },
+  ]
+
+  let t = 0
+
+  // ── BLACK HOLE ATTRACTION ──────────────────────────────
+  // Returns offset {ox, oy} for a point at absolute screen coords (absX, absY)
+  const ATTRACT_RADIUS   = 200
+  const ATTRACT_STRENGTH = 0.38
+
+  function attract(absX, absY) {
+    if (mouseX < 0) return { ox: 0, oy: 0 }
+    const dx   = mouseX - absX
+    const dy   = mouseY - absY
+    const dist = Math.sqrt(dx * dx + dy * dy)
+    if (dist > ATTRACT_RADIUS) return { ox: 0, oy: 0 }
+    const force = Math.pow(1 - dist / ATTRACT_RADIUS, 1.6) * ATTRACT_STRENGTH
+    return { ox: dx * force, oy: dy * force }
+  }
+
+  // ── DRAW SIDE ARCHES ─────────────────────────────────
+  function drawArches(ctx, W, H, flip, sideOffsetX) {
+    ctx.clearRect(0, 0, W, H)
+
+    // Edge fog
+    const fog = ctx.createLinearGradient(flip ? W : 0, 0, flip ? 0 : W, 0)
+    fog.addColorStop(0,   'rgba(10,8,6,0.75)')
+    fog.addColorStop(0.5, 'rgba(10,8,6,0)')
+    ctx.fillStyle = fog
+    ctx.fillRect(0, 0, W, H)
+
+    // Vertical golden lines — 3 per side
+    const vLines = [
+      { x: flip ? W-12 : 12, alpha: 0.55 },
+      { x: flip ? W-28 : 28, alpha: 0.32 },
+      { x: flip ? W-44 : 44, alpha: 0.18 },
+    ]
+    for (const v of vLines) {
+      const grad = ctx.createLinearGradient(0, 0, 0, H)
+      grad.addColorStop(0,   'rgba(255,204,102,0)')
+      grad.addColorStop(0.2, `rgba(255,204,102,${v.alpha})`)
+      grad.addColorStop(0.8, `rgba(255,204,102,${v.alpha})`)
+      grad.addColorStop(1,   'rgba(255,204,102,0)')
+      ctx.strokeStyle = grad
+      ctx.lineWidth = 1
+      ctx.beginPath(); ctx.moveTo(v.x, 0); ctx.lineTo(v.x, H); ctx.stroke()
+    }
+
+    // Bezier arc lines — FULL arc attraction (outer start + inner end + control points)
+    for (const arc of arcDefs) {
+      const wave  = Math.sin(t / arc.period) * arc.amp
+      const pulse = Math.sin(t / arc.period + 1) * 0.12
+      const yBase = arc.y + wave
+
+      // ── Outer start point (bordo schermo, X=edge)
+      const startXLocal = flip ? W    : 0
+      const startXAbs   = flip ? sideOffsetX + W : sideOffsetX
+      const startAtt    = attract(startXAbs, yBase + sideOffsetX * 0)
+      // Note: sideOffsetX * 0 is just 0 — arcEndY in screen space = canvas y (no vertical offset needed)
+      const sX = startXLocal + (flip ? -startAtt.ox : startAtt.ox)
+      const sY = yBase        + startAtt.oy
+
+      // ── Inner end point (bordo immagine)
+      const endXLocal = flip ? W * 0.08 : W * 0.92
+      const endXAbs   = sideOffsetX + endXLocal
+      const endAtt    = attract(endXAbs, yBase)
+      const eX = endXLocal + (flip ? -endAtt.ox : endAtt.ox)
+      const eY = yBase      + endAtt.oy
+
+      // ── Control points — weighted blend of outer and inner attraction
+      // cp1: close to outer → mostly startAtt
+      const cp1x_base = flip ? W * 0.6 : W * 0.4
+      const cp1y_base = yBase - arc.amp
+      const cp1x = cp1x_base + (flip ? -(startAtt.ox * 0.7 + endAtt.ox * 0.3) : (startAtt.ox * 0.7 + endAtt.ox * 0.3))
+      const cp1y = cp1y_base  + startAtt.oy * 0.7 + endAtt.oy * 0.3
+
+      // cp2: close to inner → mostly endAtt
+      const cp2x_base = flip ? W * 0.3 : W * 0.7
+      const cp2y_base = yBase + arc.amp * 0.5
+      const cp2x = cp2x_base + (flip ? -(startAtt.ox * 0.3 + endAtt.ox * 0.7) : (startAtt.ox * 0.3 + endAtt.ox * 0.7))
+      const cp2y = cp2y_base  + startAtt.oy * 0.3 + endAtt.oy * 0.7
+
+      // ── Draw
+      const totalAttraction = Math.abs(startAtt.ox) + Math.abs(startAtt.oy) + Math.abs(endAtt.ox) + Math.abs(endAtt.oy)
+      ctx.strokeStyle = `rgba(255,204,102,${arc.alpha + pulse + (totalAttraction > 10 ? 0.2 : 0)})`
+      ctx.lineWidth   = arc.thick + (totalAttraction > 10 ? 0.4 : 0)
+      ctx.beginPath()
+      ctx.moveTo(sX, sY)
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, eX, eY)
+      ctx.stroke()
+
+      // Inner glow dot
+      const dotAlpha = Math.min(arc.alpha + pulse + (totalAttraction > 5 ? 0.35 : 0), 0.95)
+      ctx.fillStyle = `rgba(255,204,102,${dotAlpha * 1.5})`
+      ctx.beginPath(); ctx.arc(eX, eY, 2.2, 0, Math.PI * 2); ctx.fill()
+
+      // Outer glow dot (at start, on edge) — subtle
+      ctx.fillStyle = `rgba(255,204,102,${(arc.alpha * 0.6 + (totalAttraction > 5 ? 0.2 : 0))})`
+      ctx.beginPath(); ctx.arc(sX, sY, 1.5, 0, Math.PI * 2); ctx.fill()
+
+      // Halo rings when attracted
+      if (totalAttraction > 10) {
+        ctx.strokeStyle = `rgba(255,204,102,0.22)`
+        ctx.lineWidth = 0.5
+        ctx.beginPath(); ctx.arc(eX, eY, 10, 0, Math.PI * 2); ctx.stroke()
+        ctx.beginPath(); ctx.arc(sX, sY, 7,  0, Math.PI * 2); ctx.stroke()
+      }
+    }
+  }
+
+
+  // ── DRAW CROSSOVER AT FEET ──────────────────────────
+  // Symmetric X-crossing lines at the bottom edge of the portrait
+  function drawCrossover(ctx, W, H) {
+    ctx.clearRect(0, 0, W, H)
+
+    const crossY  = feetY          // vertical position of crossing
+    const spreadX = pW * 0.7       // how wide the X spans
+    const riseY   = 90             // how high the arms reach
+    const wave    = Math.sin(t / 180) * 8
+    const pulse   = (Math.sin(t / 120) + 1) / 2  // 0..1 breathing
+    const baseAlpha = 0.35 + pulse * 0.25
+
+    // Left arm: starts from left side → crosses right below feet
+    // Right arm: starts from right side → crosses left below feet
+    const leftStart  = { x: pX - spreadX, y: crossY - riseY + wave }
+    const rightStart = { x: pX + spreadX, y: crossY - riseY - wave }
+    const leftEnd    = { x: pX + spreadX * 0.5, y: crossY + riseY * 0.5 }
+    const rightEnd   = { x: pX - spreadX * 0.5, y: crossY + riseY * 0.5 }
+    const crossPt    = { x: pX, y: crossY + wave * 0.5 }
+
+    // Cursor attraction to cross-point
+    const dx = mouseX - crossPt.x
+    const dy = mouseY - crossPt.y
+    const dist = Math.sqrt(dx*dx + dy*dy)
+    let attractOX = 0, attractOY = 0
+    if (dist < 220 && mouseX > 0) {
+      const f = (1 - dist / 220) * 0.4
+      attractOX = dx * f; attractOY = dy * f
+    }
+
+    // Draw left → right arm
+    const grad1 = ctx.createLinearGradient(leftStart.x, leftStart.y, leftEnd.x, leftEnd.y)
+    grad1.addColorStop(0, 'rgba(255,204,102,0)')
+    grad1.addColorStop(0.4, `rgba(255,204,102,${baseAlpha})`)
+    grad1.addColorStop(0.7, `rgba(255,204,102,${baseAlpha * 1.4})`)
+    grad1.addColorStop(1, 'rgba(255,204,102,0)')
+
+    ctx.strokeStyle = grad1
+    ctx.lineWidth = 1.2
+    ctx.beginPath()
+    ctx.moveTo(leftStart.x, leftStart.y)
+    ctx.quadraticCurveTo(crossPt.x + attractOX, crossPt.y + attractOY, leftEnd.x, leftEnd.y)
+    ctx.stroke()
+
+    // Draw right → left arm
+    const grad2 = ctx.createLinearGradient(rightStart.x, rightStart.y, rightEnd.x, rightEnd.y)
+    grad2.addColorStop(0, 'rgba(255,204,102,0)')
+    grad2.addColorStop(0.4, `rgba(255,204,102,${baseAlpha})`)
+    grad2.addColorStop(0.7, `rgba(255,204,102,${baseAlpha * 1.4})`)
+    grad2.addColorStop(1, 'rgba(255,204,102,0)')
+
+    ctx.strokeStyle = grad2
+    ctx.lineWidth = 1.2
+    ctx.beginPath()
+    ctx.moveTo(rightStart.x, rightStart.y)
+    ctx.quadraticCurveTo(crossPt.x + attractOX, crossPt.y + attractOY, rightEnd.x, rightEnd.y)
+    ctx.stroke()
+
+    // Crossover glow dot
+    ctx.fillStyle = `rgba(255,204,102,${baseAlpha * 1.8})`
+    ctx.beginPath()
+    ctx.arc(crossPt.x + attractOX, crossPt.y + attractOY, 2.5, 0, Math.PI * 2)
+    ctx.fill()
+
+    // Orbiting micro-dot
+    const theta = t / 60
+    const orbitR = 12 + pulse * 6
+    ctx.fillStyle = `rgba(255,204,102,${baseAlpha * 0.9})`
+    ctx.beginPath()
+    ctx.arc(
+      crossPt.x + attractOX + Math.cos(theta) * orbitR,
+      crossPt.y + attractOY + Math.sin(theta) * orbitR,
+      1.2, 0, Math.PI * 2
+    )
+    ctx.fill()
+    // Counter-orbit
+    ctx.fillStyle = `rgba(255,204,102,${baseAlpha * 0.6})`
+    ctx.beginPath()
+    ctx.arc(
+      crossPt.x + attractOX + Math.cos(theta + Math.PI) * orbitR * 0.7,
+      crossPt.y + attractOY + Math.sin(theta + Math.PI) * orbitR * 0.7,
+      0.9, 0, Math.PI * 2
+    )
+    ctx.fill()
+  }
+
+  // ── ANIMATION LOOP ─────────────────────────────────
+  function tick() {
+    t++
+    drawArches(L.ctx, W, H, false, 0)
+    drawArches(R.ctx, W, H, true,  window.innerWidth - W)
+    drawCrossover(crossCtx, window.innerWidth, window.innerHeight)
+    requestAnimationFrame(tick)
+  }
+  tick()
+})
+</script>
+</body>
+</html>

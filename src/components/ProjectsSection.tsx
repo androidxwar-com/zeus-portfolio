@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 
+import zeusImg from '../assets/projects/zeus_wide.png'
+import stormImg from '../assets/projects/storm.png'
+import aetherImg from '../assets/projects/aether.png'
+import roootImg from '../assets/projects/rooot_wide.png'
+
 interface Project {
     id: string
     title: string
@@ -11,7 +16,7 @@ interface Project {
     year: string
     size: 'wide' | 'normal'
     gradient: string
-    icon: string
+    image: string
 }
 
 const projects: Project[] = [
@@ -25,7 +30,7 @@ const projects: Project[] = [
         year: '2024',
         size: 'wide',
         gradient: 'from-violet-900/60 via-purple-900/40 to-transparent',
-        icon: '⚡',
+        image: zeusImg,
     },
     {
         id: 'storm',
@@ -37,7 +42,7 @@ const projects: Project[] = [
         year: '2024',
         size: 'normal',
         gradient: 'from-cyan-900/60 via-sky-900/40 to-transparent',
-        icon: '🌀',
+        image: stormImg,
     },
     {
         id: 'aether',
@@ -49,7 +54,7 @@ const projects: Project[] = [
         year: '2023',
         size: 'normal',
         gradient: 'from-emerald-900/60 via-teal-900/40 to-transparent',
-        icon: '🎙️',
+        image: aetherImg,
     },
     {
         id: 'rooot',
@@ -61,7 +66,7 @@ const projects: Project[] = [
         year: '2023',
         size: 'wide',
         gradient: 'from-orange-900/60 via-amber-900/40 to-transparent',
-        icon: '🪴',
+        image: roootImg,
     },
 ]
 
@@ -84,11 +89,11 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
             whileHover={{ y: -6, transition: { duration: 0.3 } }}
             className={`glass rounded-2xl overflow-hidden cursor-pointer group select-none ${project.size === 'wide' ? 'md:col-span-2' : ''}`}
         >
-            {/* Gradient header */}
-            <div className={`h-40 bg-gradient-to-br ${project.gradient} relative`}>
-                <span className="absolute top-5 left-6 text-4xl">{project.icon}</span>
-                <span className="absolute bottom-5 right-5 text-[10px] tracking-[0.3em] uppercase text-white/30">{project.year}</span>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/[0.03]" />
+            {/* Image header */}
+            <div className={`h-40 bg-gradient-to-br ${project.gradient} relative overflow-hidden group-hover:opacity-90 transition-opacity`}>
+                <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+                <span className="absolute bottom-5 right-5 text-[10px] tracking-[0.3em] uppercase text-white/50 font-bold z-10">{project.year}</span>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
 
             <div className="p-6">
@@ -127,13 +132,13 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 className="fixed inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 top-16 md:top-20 md:w-[640px] glass-strong rounded-2xl overflow-hidden z-50"
                 style={{ maxHeight: 'calc(100vh - 6rem)', overflowY: 'auto' }}
             >
-                <div className={`h-48 bg-gradient-to-br ${project.gradient} relative flex-shrink-0`}>
-                    <span className="absolute top-6 left-6 text-5xl">{project.icon}</span>
-                    <span className="absolute bottom-5 right-5 text-[10px] tracking-[0.3em] uppercase text-white/30">{project.year}</span>
+                <div className={`h-48 bg-gradient-to-br ${project.gradient} relative flex-shrink-0 overflow-hidden`}>
+                    <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" />
+                    <span className="absolute bottom-5 right-5 text-[10px] tracking-[0.3em] uppercase text-white/50 font-bold z-10">{project.year}</span>
                     {/* Close btn */}
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center text-white/60 hover:text-white transition-colors"
+                        className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-white/80 hover:bg-white hover:text-black transition-all z-20"
                     >
                         ✕
                     </button>

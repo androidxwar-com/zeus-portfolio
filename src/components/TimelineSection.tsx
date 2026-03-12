@@ -61,6 +61,17 @@ export function TimelineSection() {
 
     return (
         <section ref={ref} className="relative py-32 px-6 md:px-16 max-w-5xl mx-auto">
+            {/* ── LIQUID DISSOLVE: top gradient. Incontra il gradient bottom della Hero. ── */}
+            <div
+                className="absolute inset-x-0 top-0 pointer-events-none z-10"
+                style={{
+                    height: '12rem',
+                    background: 'linear-gradient(to bottom, #0a0806 0%, rgba(10,8,6,0.6) 50%, transparent 100%)',
+                    marginLeft: '-1.5rem',
+                    marginRight: '-1.5rem',
+                    width: 'calc(100% + 3rem)',
+                }}
+            />
             {/* Section header */}
             <motion.div
                 className="mb-20"
